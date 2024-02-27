@@ -1,0 +1,1 @@
+* loss during evaluation = 5139.785023597075

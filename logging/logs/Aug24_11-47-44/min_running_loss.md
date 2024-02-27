@@ -1,0 +1,1 @@
+* smallest running_loss during training = 3464.4831557675884
