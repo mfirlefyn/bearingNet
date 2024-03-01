@@ -1,6 +1,6 @@
 # BearingNet: Direct Learning of Home Vector Direction for Insect-inspired Robot Navigation
 
-![alt text](https://github.com/mfirlefyn/flightmare/blob/master/docs/scene_git.png "intro image")
+![alt text](https://github.com/mfirlefyn/bearingNet/blob/master/CNN.png "CNN image")
 
 ## Clean Installation Instructions
 
