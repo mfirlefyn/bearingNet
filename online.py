@@ -14,7 +14,7 @@ Paper reference: Direct Learning of Home Vector Direction for Insect-inspired Ro
     # terminal 2: earlyoom
 # RUN BEARINGNET
     # terminal 3: offline.py script
-    # before invoking script, run: "export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python"
+    # before invoking script, run: "export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python3"
 
 # import modules
 import subprocess
@@ -55,7 +55,7 @@ y = 5      # col nr of nest (rel to grid, not distance)
 for dist in [1]:   
     # change to the directory and generate the labels.csv file
     os.chdir("./bearingNet")
-    subprocess.call(["python", "writeLabels.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist), "--training_trajectory", "spiral"])
+    subprocess.call(["python3", "writeLabels.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist), "--training_trajectory", "spiral"])
     os.chdir("./..")
 
     # remove nest location from the image directory
@@ -69,13 +69,13 @@ for dist in [1]:
     # run the bearingNet.py script in order to train the network
     print(f"({x},{y},{dist})+++++TRAIN THE NETWORK+++++")
     os.chdir("./bearingNet")
-    subprocess.call(["python", "bearingNet_online.py", "--activity", "train", "--nest_location_x", str(x), "--nest_location_y", str(y)])
+    subprocess.call(["python3", "bearingNet_online.py", "--activity", "train", "--nest_location_x", str(x), "--nest_location_y", str(y)])
     os.chdir("./..")
 
     # run the logging script to log the train results (run and weight)
     print(f"({x},{y},{dist})+++++LOG THE NET WEIGHTS AND TENSORBOARD RUN+++++")
     os.chdir("./logging")
-    subprocess.call(["python", "logRun_online.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
+    subprocess.call(["python3", "logRun_online.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
     os.chdir("./..")
 
     # move the nest location back into image directory
@@ -95,7 +95,7 @@ sock.setsockopt_string(zmq.SUBSCRIBE,"Evaluate")
 sock.connect("tcp://127.0.0.1:10255")
 
 counter = 0
-# When evaluation image has come in, Python receives message and can rectify and evaluate it
+# When evaluation image has come in, python3 receives message and can rectify and evaluate it
 try:
     while True:
         message = sock.recv()
@@ -106,7 +106,7 @@ try:
             # rectify the omni-directional images
             print(f"({x},{y},{dist})+++++RECTIFICATION OF OMNI-DIRECTIONAL EVALUATION IMAGE+++++")
             os.chdir("./rectification")
-            subprocess.call(["python", "rectify_single.py", "--image", "~/catkin_ws/src/flightmare/flightros/src/camera/eval_images/omni-dir-eval-img.jpg"])
+            subprocess.call(["python3", "rectify_single.py", "--image", "~/catkin_ws/src/flightmare/flightros/src/camera/eval_images/omni-dir-eval-img.jpg"])
             os.chdir("./..")
 
             # move images from rectification folder to evaluation folder
@@ -116,7 +116,7 @@ try:
             # run the bearingNet.py script in order to evaluate the network
             print(f"({x},{y},{dist})+++++EVALUATE THE NETWORK ON ONLINE IMAGE+++++")
             os.chdir("./bearingNet")
-            subprocess.call(["python", "bearingNet_online.py", "--activity", "evaluate", "--nest_location_x", str(x), "--nest_location_y", str(y)])
+            subprocess.call(["python3", "bearingNet_online.py", "--activity", "evaluate", "--nest_location_x", str(x), "--nest_location_y", str(y)])
 
             print("============================================")
 

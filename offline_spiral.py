@@ -14,7 +14,7 @@ Paper reference: Direct Learning of Home Vector Direction for Insect-inspired Ro
 	# terminal 2: earlyoom
 # RUN BEARINGNET
 	# terminal 3: source ros setup.bash files 
-	# terminal 3: before invoking script, run: "export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python"
+	# terminal 3: before invoking script, run: "export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python3"
 	# terminal 3: offline.py script
 
 # import modules
@@ -38,7 +38,7 @@ for dist in [1]:
 	# change to the directory and generate the labels.csv file
 	print(f"({x},{y},{dist})+++++GENERATE LABELS.CSV+++++")
 	os.chdir("./bearingNet")
-	subprocess.call(["python", "writeLabels.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist), "--training_trajectory", "spiral"])
+	subprocess.call(["python3", "writeLabels.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist), "--training_trajectory", "spiral"])
 	os.chdir("./..")
 
 	# run flightmare
@@ -62,7 +62,7 @@ for dist in [1]:
 	# rectify the omni-directional images
 	print(f"({x},{y},{dist})+++++RECTIFICATION OF OMNI-DIRECTIONAL IMAGES+++++")
 	os.chdir("./rectification")
-	subprocess.call(["python", "rectify.py"])
+	subprocess.call(["python3", "rectify.py"])
 	os.chdir("./..")
 
 	# change image names with single digit to double digit
@@ -86,25 +86,25 @@ for dist in [1]:
 	# run the bearingNet.py script in order to train the network
 	print(f"({x},{y},{dist})+++++TRAIN THE NETWORK+++++")
 	os.chdir("./bearingNet")
-	subprocess.call(["python", "bearingNet_offline_spiral.py", "--activity", "train", "--nest_location_x", str(x), "--nest_location_y", str(y)])
+	subprocess.call(["python3", "bearingNet_offline_spiral.py", "--activity", "train", "--nest_location_x", str(x), "--nest_location_y", str(y)])
 	os.chdir("./..")
 
 	# run the logging script to log the train results (run and weight)
 	print(f"({x},{y},{dist})+++++LOG THE NET WEIGHTS AND TENSORBOARD RUN+++++")
 	os.chdir("./logging")
-	subprocess.call(["python", "logRun_offline_spiral.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
+	subprocess.call(["python3", "logRun_offline_spiral.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
 	os.chdir("./..")
 
 	# run the bearingNet.py script in order to evaluate the network
 	print(f"({x},{y},{dist})+++++EVALUATE THE NETWORK+++++")
 	os.chdir("./bearingNet")
-	subprocess.call(["python", "bearingNet_offline_spiral.py", "--activity", "evaluate", "--nest_location_x", str(x), "--nest_location_y", str(y)])
+	subprocess.call(["python3", "bearingNet_offline_spiral.py", "--activity", "evaluate", "--nest_location_x", str(x), "--nest_location_y", str(y)])
 	os.chdir("./..")
 
 	# run the logging script to log the evaluation results (graphs)
 	print(f"({x},{y},{dist})+++++LOG THE EVALUATION GRAPHS+++++")
 	os.chdir("./logging")
-	subprocess.call(["python", "logRun_offline_spiral.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
+	subprocess.call(["python3", "logRun_offline_spiral.py", "--nest_location_x", str(x), "--nest_location_y", str(y), "--grid_distance", str(dist)])
 	os.chdir("./..")
 
 	# move the nest location back into image directory
